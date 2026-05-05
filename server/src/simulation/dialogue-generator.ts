@@ -42,6 +42,8 @@ export class DialogueGenerator {
         hearsayA: context.hearsayA,
         hearsayB: context.hearsayB,
         worldSocialContext: this.worldManager.getWorldSocialContext(),
+        knownCharacters: this.formatKnownCharacters(),
+        knownLocations: this.formatKnownLocations(),
       });
 
       const result = await this.llmClient.call({
@@ -326,5 +328,23 @@ export class DialogueGenerator {
       [profileB.id]: profileB.id,
     };
     return nameToId[normalized] ?? fallback;
+  }
+
+  private formatKnownCharacters(): string {
+    return this.characterManager
+      .getAllProfiles()
+      .map((p) => {
+        const nickname =
+          p.nickname && p.nickname !== p.name ? `，又称${p.nickname}` : "";
+        return `- ${p.name}（${p.id} / ${p.role}${nickname}）`;
+      })
+      .join("\n");
+  }
+
+  private formatKnownLocations(): string {
+    return this.worldManager
+      .getAllLocations()
+      .map((loc) => `- ${loc.name}（${loc.id}）`)
+      .join("\n");
   }
 }

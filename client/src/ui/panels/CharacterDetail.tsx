@@ -394,6 +394,14 @@ function compareHistoryRecordsDesc(a: HistoryRecord, b: HistoryRecord): number {
   if (a.gameDay !== b.gameDay) return b.gameDay - a.gameDay;
   if (a.gameTick !== b.gameTick) return b.gameTick - a.gameTick;
 
+  if (
+    a.kind === "dialogue_turn" &&
+    b.kind === "dialogue_turn" &&
+    a.conversationId === b.conversationId
+  ) {
+    return b.turnIndex - a.turnIndex;
+  }
+
   const createdAtCompare = (b.createdAt || "").localeCompare(a.createdAt || "");
   if (createdAtCompare !== 0) return createdAtCompare;
 

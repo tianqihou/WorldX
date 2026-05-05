@@ -163,6 +163,8 @@ export class PromptBuilder {
     hearsayA?: string;
     hearsayB?: string;
     worldSocialContext?: string;
+    knownCharacters?: string;
+    knownLocations?: string;
   }): Message[] {
     const { participants, location, initiatorId, gameTime } = params;
 
@@ -207,6 +209,8 @@ export class PromptBuilder {
       nextSpeakerId: params.nextSpeaker,
       nextSpeakerName: nextSpeakerProfile?.name ?? params.nextSpeaker,
       currentTurnCount: String(params.totalTurns),
+      knownCharacters: params.knownCharacters || "（无）",
+      knownLocations: params.knownLocations || "（无）",
       iconicCuesBlock: formatIconicCuesBlockForPair(a.profile, b.profile),
     });
 

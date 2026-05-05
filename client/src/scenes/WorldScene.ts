@@ -470,6 +470,10 @@ export class WorldScene extends Phaser.Scene {
       }
       if (spriteA && spriteB) {
         if (dialogue.phase === "turn" && dialogue.turnIndexStart === 0) {
+          await this.reconcileDialogueParticipantLocations(
+            dialogue.participants,
+            event.location,
+          );
           const runtimePatch = await this.characterMovement.approachForDialogue(idA, idB);
           if (runtimePatch?.mainAreaPointId && !this.isReplaying) {
             void apiClient.patchCharacterRuntimeState(idA, runtimePatch).catch((error) => {
@@ -510,6 +514,24 @@ export class WorldScene extends Phaser.Scene {
         this.scheduleTickPlaybackCompletionCheck();
       });
     }
+  }
+
+  private async reconcileDialogueParticipantLocations(
+    participantIds: string[],
+    locationId?: string,
+  ): Promise<void> {
+    if (!locationId) return;
+
+    await Promise.all(
+      participantIds.map(async (participantId) => {
+        const sprite = this.characterSprites.get(participantId);
+        if (!sprite || sprite.currentLocationId === locationId) return;
+
+        await this.characterMovement.moveToLocation(participantId, locationId, {
+          force: true,
+        });
+      }),
+    );
   }
 
   private setDialogueActionState(participantIds: string[], action: string | null) {
