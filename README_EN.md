@@ -95,7 +95,7 @@ npm run create -- "A cyberpunk noodle shop where hackers and androids share rumo
 
 ## Model Configuration
 
-WorldX uses **4 model roles**, each configurable independently. All use the OpenAI-compatible `chat/completions` protocol — any compatible platform works.
+WorldX uses **4 model roles**, each configurable independently. All roles use the OpenAI-compatible `chat/completions` protocol except Image Gen, which can also use Google AI Studio's native image API.
 
 | Role | Env Prefix | What It Does | Recommended |
 |------|-----------|-------------|-------------|
@@ -104,13 +104,15 @@ WorldX uses **4 model roles**, each configurable independently. All use the Open
 | **Vision** | `VISION_` | Reviews map quality, locates regions/elements | Strong multimodal model (e.g. `gemini-3.1-pro-preview`) |
 | **Simulation** | `SIMULATION_` | Drives runtime character behavior | Any model — cheaper is fine (e.g. `gemini-2.5-flash`) |
 
-Each role needs 3 env vars:
+Each role usually needs 3 env vars:
 
 ```env
 {ROLE}_BASE_URL=https://openrouter.ai/api/v1    # API base URL
 {ROLE}_API_KEY=sk-or-v1-xxxx                     # API key
 {ROLE}_MODEL=google/gemini-3.1-pro-preview       # Model identifier
 ```
+
+Image Gen can additionally set `IMAGE_GEN_PROVIDER`. `IMAGE_GEN_PROVIDER` can be `openai-compatible` (default, for OpenRouter) or `google-native` (for Google AI Studio image generation).
 
 ### Platform Examples
 
@@ -125,6 +127,7 @@ ORCHESTRATOR_API_KEY=sk-or-v1-xxxx
 ORCHESTRATOR_MODEL=google/gemini-3.1-pro-preview
 
 IMAGE_GEN_BASE_URL=https://openrouter.ai/api/v1
+IMAGE_GEN_PROVIDER=openai-compatible
 IMAGE_GEN_API_KEY=sk-or-v1-xxxx
 IMAGE_GEN_MODEL=google/gemini-3.1-flash-image-preview
 
@@ -150,6 +153,7 @@ ORCHESTRATOR_API_KEY=AIzaSy...
 ORCHESTRATOR_MODEL=gemini-3.1-pro-preview
 
 IMAGE_GEN_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai
+IMAGE_GEN_PROVIDER=google-native
 IMAGE_GEN_API_KEY=AIzaSy...
 IMAGE_GEN_MODEL=gemini-3.1-flash-image-preview
 
@@ -177,6 +181,7 @@ ORCHESTRATOR_MODEL=gemini-3.1-pro-preview
 
 # Art generation — Google AI Studio
 IMAGE_GEN_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai
+IMAGE_GEN_PROVIDER=google-native
 IMAGE_GEN_API_KEY=AIzaSy...
 IMAGE_GEN_MODEL=gemini-3.1-flash-image-preview
 
