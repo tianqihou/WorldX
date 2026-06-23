@@ -27,6 +27,64 @@
 
 ---
 
+## Powered by Atlas Cloud
+
+<p align="center">
+  <a href="https://www.atlascloud.ai/?utm_source=github&utm_medium=link&utm_campaign=WorldX">
+    <img src="docs/atlas-cloud-logo.png" alt="Atlas Cloud" width="180" />
+  </a>
+</p>
+
+[**Atlas Cloud**](https://www.atlascloud.ai/?utm_source=github&utm_medium=link&utm_campaign=WorldX) provides WorldX with a single OpenAI-compatible API for both LLM (story & character generation) and image generation (maps, character visuals) — 59 curated LLM models + 300+ image/video models under one key.
+
+**Quick setup — all 4 WorldX roles via Atlas Cloud:**
+
+```env
+# Orchestrator — world design & character rules
+ORCHESTRATOR_BASE_URL=https://api.atlascloud.ai/v1
+ORCHESTRATOR_API_KEY=<your-atlascloud-key>
+ORCHESTRATOR_MODEL=deepseek-ai/deepseek-v4-pro   # strong reasoning; max_tokens ≥ 512
+
+# Image Generation — map art & character sprites (openai-compatible)
+IMAGE_GEN_BASE_URL=https://api.atlascloud.ai/v1
+IMAGE_GEN_PROVIDER=openai-compatible
+IMAGE_GEN_API_KEY=<your-atlascloud-key>
+IMAGE_GEN_MODEL=black-forest-labs/FLUX.1-dev
+
+# Vision Review — map quality & region detection
+VISION_BASE_URL=https://api.atlascloud.ai/v1
+VISION_API_KEY=<your-atlascloud-key>
+VISION_MODEL=qwen/qwen2.5-vl-72b-instruct
+
+# Simulation Engine — character decisions & dialogue (any model works)
+SIMULATION_BASE_URL=https://api.atlascloud.ai/v1
+SIMULATION_API_KEY=<your-atlascloud-key>
+SIMULATION_MODEL=deepseek-ai/deepseek-v3-turbo   # cost-effective for high-volume calls
+```
+
+> **Note:** Set `max_tokens ≥ 512` for Orchestrator and Vision calls to avoid truncated world designs.
+
+Get your free key → [atlascloud.ai/console/coding-plan](https://www.atlascloud.ai/console/coding-plan) · Browse all models → [atlascloud.ai/models](https://www.atlascloud.ai/models)
+
+<details>
+<summary><strong>59 LLM models available on Atlas Cloud</strong></summary>
+
+| Category | Models |
+|----------|--------|
+| **DeepSeek** | deepseek-v4-pro, deepseek-v3, deepseek-v3-turbo, deepseek-v3-0324, deepseek-r1, deepseek-r1-0528, deepseek-r1-distill-llama-70b, deepseek-r1-distill-qwen-32b |
+| **Qwen** | qwen3-235b-a22b, qwen3-32b, qwen3-30b-a3b, qwen3-14b, qwen3-8b, qwen2.5-72b-instruct, qwen2.5-32b-instruct, qwen2.5-vl-72b-instruct, qwen2.5-vl-7b-instruct, qwq-32b |
+| **Llama** | llama-4-scout, llama-4-maverick, llama-3.3-70b-instruct, llama-3.1-70b-instruct, llama-3.1-8b-instruct |
+| **Gemma** | gemma-3-27b-it, gemma-3-12b-it, gemma-3-4b-it |
+| **Mistral** | mistral-small-3.1, mistral-nemo, codestral-2501 |
+| **Claude** | claude-opus-4, claude-sonnet-4, claude-sonnet-3-7, claude-haiku-3-5 |
+| **GPT / o-series** | gpt-4.1, gpt-4.1-mini, gpt-4o, gpt-4o-mini, o3, o4-mini |
+| **Gemini** | gemini-2.5-pro, gemini-2.5-flash, gemini-2.0-flash |
+| **Other** | phi-4, phi-4-mini, internvl3-14b, glm-4-32b, yi-lightning, moonshot-v1-8k, step-2-16k, hunyuan-turbos, doubao-1-5-pro-32k, baichuan4-air, minimax-text-01 |
+
+</details>
+
+---
+
 **WorldX** turns a single text prompt into a fully autonomous AI world. The system designs the world, generates original maps and character art, then runs a living simulation where AI agents make decisions, form relationships, have conversations, and create emergent narratives — all without human intervention.
 
 > "A cozy autumn mountain village with a blacksmith, a tavern owner, a wandering monk, and a curious child"
@@ -115,6 +173,32 @@ Each role usually needs 3 env vars:
 Image Gen can additionally set `IMAGE_GEN_PROVIDER`. `IMAGE_GEN_PROVIDER` can be `openai-compatible` (default, for OpenRouter) or `google-native` (for Google AI Studio image generation).
 
 ### Platform Examples
+
+<details>
+<summary><strong>Atlas Cloud</strong> (OpenAI-compatible — LLM + image gen, one key)</summary>
+
+Get a key at [atlascloud.ai/console/coding-plan](https://www.atlascloud.ai/console/coding-plan):
+
+```env
+ORCHESTRATOR_BASE_URL=https://api.atlascloud.ai/v1
+ORCHESTRATOR_API_KEY=<your-atlascloud-key>
+ORCHESTRATOR_MODEL=deepseek-ai/deepseek-v4-pro
+
+IMAGE_GEN_BASE_URL=https://api.atlascloud.ai/v1
+IMAGE_GEN_PROVIDER=openai-compatible
+IMAGE_GEN_API_KEY=<your-atlascloud-key>
+IMAGE_GEN_MODEL=black-forest-labs/FLUX.1-dev
+
+VISION_BASE_URL=https://api.atlascloud.ai/v1
+VISION_API_KEY=<your-atlascloud-key>
+VISION_MODEL=qwen/qwen2.5-vl-72b-instruct
+
+SIMULATION_BASE_URL=https://api.atlascloud.ai/v1
+SIMULATION_API_KEY=<your-atlascloud-key>
+SIMULATION_MODEL=deepseek-ai/deepseek-v3-turbo
+```
+
+</details>
 
 <details>
 <summary><strong>OpenRouter</strong> (recommended — one key for all models)</summary>
